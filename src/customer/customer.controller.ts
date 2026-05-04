@@ -8,7 +8,7 @@ export class CustomerController {
 
     @Get()
     getAll(){
-        return this.customerService.getAllCustomers;
+        return this.customerService.getAllCustomers();
     }
 
     @Post()
