@@ -1,37 +1,30 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { StudentService } from './student.service';
+import { Student } from './student.schema';
 
 @Controller('student')
 export class StudentController {
     constructor(private readonly studentService: StudentService) { };
 
+    @Post()
+    async addStudent(@Body() data: Partial<Student>): Promise<Student> {
+        return this.studentService.createStudent(data);
+    }
+
     @Get()
-    getAll() {
+    async getAllStudents(): Promise<Student[]> {
         return this.studentService.getAllStudents();
     }
 
     @Get(':id')
-    getById(@Param('id') id: string) {
-        return this.studentService.getStudentById(Number(id));
-    }
-
-    @Post()
-    addNew(@Body() data: { name: string; age: number }) {
-        return this.studentService.addNewStudent(data);
+    async getOne(@Param('id') id: string): Promise<Student | null> {
+        return this.studentService.getStudentById(id);
     }
 
     @Put(':id')
-    editFull(@Param('id') id: string, @Body() data: { name: string; age: number }) {
-        return this.studentService.editStudent(Number(id), data);
-    }
-
-    @Patch(':id')
-    editSome(@Param('id') id: string, @Body() data: { name: string; age: number }) {
-        return this.studentService.patchStudent(Number(id), data);
-    }
-
-    @Delete(':id')
-    deleteOne(@Param('id') id: string) {
-        return this.studentService.deleteStudent(Number(id));
+    async updateStudent(
+        @Param('id') id: string,
+        @Body() data: Partial<Student>): Promise<Student> {
+        return this.studentService.updateStudent(id, data);
     }
 }
