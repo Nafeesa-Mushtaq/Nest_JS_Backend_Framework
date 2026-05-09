@@ -7,30 +7,47 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class StudentService {
-  constructor(
-    @InjectModel(Student.name) private studentModel: Model<StudentDocument>
-  ) {}
+    constructor(
+        @InjectModel(Student.name) private studentModel: Model<StudentDocument>
+    ) { }
 
-  async createStudent(data: Partial<Student>): Promise<Student> {
-    const newStudent = new this.studentModel(data);
-    return newStudent.save();
-  }
-   
-  async getAllStudents(): Promise<Student[]> {
-    // find() finds the data in the DB and exec() executes the query handles the promise in a better way
-    return this.studentModel.find().exec();
-  }
+    async createStudent(data: Partial<Student>): Promise<Student> {
+        const newStudent = new this.studentModel(data);
+        return newStudent.save();
+    }
 
-  async getStudentById(id: string): Promise<Student | null> {
-    const student = await this.studentModel.findById(id).exec();
-    return student;
-  }
+    async getAllStudents(): Promise<Student[]> {
+        // find() finds the data in the DB and exec() executes the query handles the promise in a better way
+        return this.studentModel.find().exec();
+    }
 
-  async updateStudent(id: string, data: Partial<Student>): Promise<Student> {
-    const updatedStudent = await this.studentModel.findByIdAndUpdate(id, data, { new: true }).exec();
-    if (!updatedStudent) {
-      throw new NotFoundException(`Student with id ${id} not found`);
-    }   
-    return updatedStudent;
-}
+    async getStudentById(id: string): Promise<Student | null> {
+        const student = await this.studentModel.findById(id).exec();
+        return student;
+    }
+
+    async updateStudent(id: string, data: Partial<Student>): Promise<Student | null> {
+        const updatedStudent = await this.studentModel.findByIdAndUpdate(id, {
+            name: data.name ?? null,
+            age: data.age ?? null,
+            email: data.email ?? null,
+        },
+            { overwrite: true, new: true }).exec();
+        if (!updatedStudent) {
+            throw new NotFoundException(`Student with id ${id} not found`);
+        }
+        return updatedStudent;
+    }
+
+    async patchStudent(id: string, data: Partial<Student>): Promise<Student | null> {
+        const updatedStudent = await this.studentModel.findByIdAndUpdate(id, data, { new: true }).exec();
+        if (!updatedStudent) {
+            throw new NotFoundException(`Student with id ${id} not found`);
+        }
+        return updatedStudent;
+    }
+
+    async deleteStudent(id: string): Promise<Student | null> {
+        return this.studentModel.findByIdAndDelete(id).exec();
+    }
 }

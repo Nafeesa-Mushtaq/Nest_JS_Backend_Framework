@@ -7,24 +7,34 @@ export class StudentController {
     constructor(private readonly studentService: StudentService) { };
 
     @Post()
-    async addStudent(@Body() data: Partial<Student>): Promise<Student> {
+    async addStudent(@Body() data: Partial<Student>) {
         return this.studentService.createStudent(data);
     }
 
     @Get()
-    async getAllStudents(): Promise<Student[]> {
+    async getAllStudents() {
         return this.studentService.getAllStudents();
     }
 
     @Get(':id')
-    async getOne(@Param('id') id: string): Promise<Student | null> {
+    async getOne(@Param('id') id: string) {
         return this.studentService.getStudentById(id);
     }
 
+
     @Put(':id')
-    async updateStudent(
-        @Param('id') id: string,
-        @Body() data: Partial<Student>): Promise<Student> {
+    async updateStudent(@Param('id') id: string, @Body() data: Partial<Student>) {
         return this.studentService.updateStudent(id, data);
+    }
+    @Patch(':id')
+    async patchOneStudent(
+        @Param('id') id: string,
+        @Body() data: Partial<Student>) {
+        return this.studentService.patchStudent(id, data);
+    }
+
+    @Delete(':id')
+    async deleteOne(@Param('id') id: string){
+        return this.studentService.deleteStudent(id);
     }
 }
