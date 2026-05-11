@@ -20,15 +20,17 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
 import { EmployeeModule } from './employee/employee.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [StudentModule, CustomerModule, ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGODB_URI!),
     UserModule,
-    EmployeeModule,  
+    EmployeeModule,
+    ProductModule,  
   ],
-  controllers: [AppController, ProductController, NameController, UserRolesController, ExceptionController, DatabaseController, EvController],
-  providers: [AppService, ProductService, DatabaseService, EvService],
+  controllers: [AppController, NameController, UserRolesController, ExceptionController, DatabaseController, EvController],
+  providers: [AppService,  DatabaseService, EvService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
