@@ -19,11 +19,13 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
+import { EmployeeModule } from './employee/employee.module';
 
 @Module({
   imports: [StudentModule, CustomerModule, ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGODB_URI!),
-    UserModule,  
+    UserModule,
+    EmployeeModule,  
   ],
   controllers: [AppController, ProductController, NameController, UserRolesController, ExceptionController, DatabaseController, EvController],
   providers: [AppService, ProductService, DatabaseService, EvService],
