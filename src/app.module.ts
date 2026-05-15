@@ -21,13 +21,15 @@ import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
 import { EmployeeModule } from './employee/employee.module';
 import { ProductModule } from './product/product.module';
+import { LibraryModule } from './library/library.module';
 
 @Module({
   imports: [StudentModule, CustomerModule, ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGODB_URI!),
     UserModule,
     EmployeeModule,
-    ProductModule,  
+    ProductModule,
+    LibraryModule,  
   ],
   controllers: [AppController, NameController, UserRolesController, ExceptionController, DatabaseController, EvController],
   providers: [AppService,  DatabaseService, EvService],
