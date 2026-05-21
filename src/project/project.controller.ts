@@ -7,17 +7,17 @@ export class ProjectController {
         private readonly projectService: ProjectService
     ) {}    
 
-    @Post('/seed')
+    @Post('seed')
     async seed() {
         return this.projectService.seed();
     }
 
-    @Get('/developers') 
+    @Get('developers') 
     async getDevelopers() {
         return this.projectService.getDevelopers();
     }
 
-    @Get('/projects')
+    @Get('projects')
     async getProjects() {
         return this.projectService.getProjects();
     }
