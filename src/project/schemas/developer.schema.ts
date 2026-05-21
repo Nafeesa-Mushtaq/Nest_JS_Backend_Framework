@@ -7,11 +7,8 @@ export class Developers extends Document {
     @Prop({required: true})
     name: string;   
     
-    @Prop({required: true})
-    description: string;    
-
-    @Prop({type: [Types.ObjectId, ref: 'Project']})
-    projects: Types.ObjectId;
+    @Prop({type: [{type: Types.ObjectId, ref: 'Project'}]})
+    projects: Types.ObjectId[];
 }
 
 export const DeveloperSchema = SchemaFactory.createForClass(Developers);
