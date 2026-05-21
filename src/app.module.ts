@@ -22,6 +22,7 @@ import { UserService } from './user/user.service';
 import { EmployeeModule } from './employee/employee.module';
 import { ProductModule } from './product/product.module';
 import { LibraryModule } from './library/library.module';
+import { ProjectModule } from './project/project.module';
 
 @Module({
   imports: [StudentModule, CustomerModule, ConfigModule.forRoot({ isGlobal: true }),
@@ -29,7 +30,8 @@ import { LibraryModule } from './library/library.module';
     UserModule,
     EmployeeModule,
     ProductModule,
-    LibraryModule,  
+    LibraryModule,
+    ProjectModule,  
   ],
   controllers: [AppController, NameController, UserRolesController, ExceptionController, DatabaseController, EvController],
   providers: [AppService,  DatabaseService, EvService],
